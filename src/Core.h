@@ -13,6 +13,9 @@
 #include <glm/gtc/half_float.hpp>
 #include <glm/gtc/quaternion.hpp>
 
+#define EPSILON 1.0e-7
+#define PI		3.14159265359
+
 typedef signed char		i8;
 typedef signed short	i16;
 typedef signed int 		i32;
@@ -42,6 +45,8 @@ using glm::mat4;
 using glm::quat;
 
 using glm::normalize;
+using glm::dot;
+using glm::cross;
 using glm::min;
 using glm::max;
 using glm::clamp;

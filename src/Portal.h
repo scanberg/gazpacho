@@ -3,20 +3,19 @@
 
 #include "Core.h"
 #include "Module.h"
+#include "Frame.h"
 
 class Portal
 {
 public:
 	Portal * getTargetPortal();
-	Module * getOwnerModule();
 	
 	void setTargetPortal(Portal * portal);
 private:
-	vec3 m_frame[4];
+	Frame m_frame;
 	bool m_mirror;
 
-	Module * m_ownerModule;
-	Portal * m_targetPortal;
+	GameObject * m_targetPortal;
 };
 
 #endif

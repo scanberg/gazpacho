@@ -6,9 +6,12 @@
 class GameObject
 {
 public:
-	bool intersect(GameObject * other);
+	bool 		isStatic();
+	Module * 	getOwnerModule();
+
 private:
 	bool 		m_static;
+	Module *	m_ownerModule;
 	Transform * m_transform;
 	Bounds *	m_bounds;
 	Mesh * 		m_mesh;

@@ -2,13 +2,19 @@
 #define FRUSTUM_H
 
 #include "Core.h"
+#include "Plane.h"
+#include "Frame.h"
+
+enum FrustumPlane { TOP, BOTTOM, LEFT, RIGHT, FRONT, BACK };
 
 class Frustum
 {
 public:
-	Frustum(vec3 eyePos, f32 near, f32 far, vec3 * frame);
+	Frustum(const vec3 & eyePos, const Frame & frame, f32 farClip);
+	const Plane &getPlane(FrustumPlane plane);
+
 private:
-	vec4 planes[6];
+	Plane m_planes[6];
 };
 
 #endif

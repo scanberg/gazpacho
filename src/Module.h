@@ -8,9 +8,11 @@ class Module
 {
 public:
 	const Array & getStaticGameObjects();
-	const List & getDynamicGameObjects();
-
+	const List 	& getDynamicGameObjects();
 	const Array & getPortals();
+
+	void addDynamicGameObject(GameObject * object);
+
 private:
 	Array 	m_staticGameObjects;
 	List	m_dynamicGameObjects;

@@ -7,11 +7,18 @@
 class Bounds
 {
 public:
-	bool intersectBoundingBox(Bounds * ba, Transform * ta, Bounds * bb, Transform * tb);
-	bool intersectBoundingSphere(Bounds * ba, Transform * ta, Bounds * bb, Transform * tb);
+	Bounds(vec3 min, vec3 max, f32 radius) :
+	m_min(min),
+	m_max(max),
+	m_radius(radius)
+	{}
+
+	const vec3 & getMin() { return m_min; }
+	const vec3 & getMax() { return m_max; }
+	const f32 & getRadius() { return m_radius;}
 private:
 	vec3 	m_min, m_max;
-	f32		radius;
+	f32		m_radius;
 };
 
 #endif
