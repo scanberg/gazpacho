@@ -10,7 +10,7 @@ class Frame
 public:
 	Frame(vec3 topLeft, vec3 topRight, vec3 bottomLeft, vec3 bottomRight);
 
-	const vec3 & getPoint(FramePoint point);
+	const vec3 & getPoint(FramePoint point) const;
 private:
 	vec3 m_points[5];
 };

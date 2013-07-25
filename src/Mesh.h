@@ -25,7 +25,7 @@ protected:
 class VertexData : public MeshData
 {
 public:
-	VertexData(VertexFormat format, BufferUsage usage, i32 size = 0, void * data = NULL);
+	VertexData(VertexFormat format, GLenum usage, i32 size = 0, void * data = NULL);
 	~VertexData();
 
 	const VertexFormat &	getFormat();
@@ -38,7 +38,7 @@ private:
 class IndexData : public MeshData
 {
 public:
-	IndexData(IndexDataType type, GLenum mode, BufferUsage usage, i32 size = 0, void * data = NULL);
+	IndexData(GLenum type, GLenum usage, GLenum mode, i32 size = 0, void * data = NULL);
 	~IndexData();
 
 	GLenum 					getType();
@@ -56,13 +56,13 @@ private:
 class IndexRange
 {
 public:
-	IndexRange(i32 start, i32 count);
+	IndexRange(u32 start, u32 count);
 
-	i32 getStart();
-	i32 getCount();
+	u32 getStart();
+	u32 getCount();
 private:
-	i32 m_start;
-	i32 m_count;
+	u32 m_start;
+	u32 m_count;
 };
 
 class Mesh
@@ -75,11 +75,21 @@ public:
 	void				draw();
 
 private:
-	Mesh();
+	Mesh(	const VertexFormat & vFormat,
+			GLenum vUsage = GL_STATIC_DRAW,
+			i32 vSize = 0,
+			void * vData = NULL, 
+			GLenum iType = GL_UNSIGNED_INT,
+			GLenum iUsage = GL_STATIC_DRAW,
+			GLenum iMode = GL_TRIANGLES,
+			i32 iSize = 0,
+			void * iData = NULL,
+			u32 iCount = 0);
 	~Mesh();
 
 	VertexData		m_vertexData;
 	IndexData		m_indexData;
+	IndexRange		m_indexRange;
 	VertexArray		m_vertexArray;
 };
 

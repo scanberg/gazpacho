@@ -6,17 +6,17 @@
 #define DEFAULT_USAGE GL_STATIC_DRAW
 #define DEFAULT_FORMAT "v3f:tc2f:n3f"
 
-VertexFormat::VertexFormat( String format ) :
+VertexFormat::VertexFormat( const char * format ) :
 m_totalByteSize(0)
 {
-	for(int i=0; i<attribCount; ++i)
+	for(i32 i=0; i<attributeCount; ++i)
 	{
 		m_components[i] = 0;
 		m_offsets[i] = 0;
 		m_types[i] = GL_FLOAT;
 	}
 
-	parseFormat(format.c_str());
+	parseFormat(format);
 	validate();
 }
 
@@ -42,7 +42,7 @@ GLenum VertexFormat::getType(VertexAttribute attr)
 
 void VertexFormat::setAttribPointers()
 {
-	for(u32 i=0; i<attributeCount; ++i)
+	for(i32 i=0; i<attributeCount; ++i)
 	{
 		if(m_components[i] > 0)
 		{
@@ -171,7 +171,7 @@ void VertexFormat::validate()
 
 
 
-Buffer::Buffer( BufferUsage usage ) :
+Buffer::Buffer( GLenum usage ) :
 m_usage(usage)
 {
 	glGenBuffers(1, &m_bufferID);

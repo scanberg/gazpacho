@@ -7,17 +7,19 @@
 class Module
 {
 public:
-	const Array & getStaticGameObjects();
-	const List 	& getDynamicGameObjects();
-	const Array & getPortals();
+	Module();
+	//Module(const Array<GameObject*> & staticGameObjects, const Array<GameObject*> & dynamicGameObjects);
+	const std::vector<GameObject*> & getStaticGameObjects();
+	const std::list<GameObject*> & getDynamicGameObjects();
+	const std::vector<GameObject*> & getPortals();
 
 	void addDynamicGameObject(GameObject * object);
 
 private:
-	Array<GameObject> 	m_staticGameObjects;
-	List<GameObject>	m_dynamicGameObjects;
+	std::vector<GameObject*> 	m_staticGameObjects;
+	std::list<GameObject*>		m_dynamicGameObjects;
 	
-	Array<GameObject>	m_portals;
+	std::vector<GameObject*>	m_portals;
 };
 
 #endif

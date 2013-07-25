@@ -1,12 +1,12 @@
-#include <stdio.h>
 #include "Mesh.h"
+#include <memory.h>
 
-MeshData::MeshData(i32 size, void * data) :
+MeshData::MeshData(i32 size, void * data)
 {
 	if(data)
 	{
-		m_data = malloc( (size_t)size );
-		memcpy( m_data, data, (size_t)size );
+		m_data = malloc( size );
+		memcpy( m_data, data, size );
 		m_size = size;
 	}
 	else
@@ -48,7 +48,7 @@ void MeshData::validate()
 
 }
 
-VertexData::VertexData(VertexFormat format, BufferUsage usage, i32 size, void * data) :
+VertexData::VertexData(VertexFormat format, GLenum usage, i32 size, void * data) :
 MeshData(size, data),
 m_format(format),
 m_vertexBuffer(usage)
@@ -71,7 +71,7 @@ const VertexBuffer & VertexData::getVertexBuffer()
 	return m_vertexBuffer;
 }
 
-IndexData::IndexData(GLenum type, GLenum mode, BufferUsage usage, i32 size, void * data) :
+IndexData::IndexData(GLenum type, GLenum usage, GLenum mode, i32 size, void * data) :
 MeshData(size, data),
 m_type(type),
 m_mode(mode),
@@ -85,24 +85,14 @@ IndexData::~IndexData()
 
 }
 
-IndexDataType IndexData::getType()
+GLenum IndexData::getType()
 {
 	return m_type;
 }
 
-IndexMode IndexData::getMode()
+GLenum IndexData::getMode()
 {
 	return m_mode;
-}
-
-GLenum IndexData::getGLType()
-{
-	return m_glType;
-}
-
-GLenum IndexData::getGLMode()
-{
-	return m_glMode;
 }
 
 void IndexData::validate()
@@ -128,36 +118,26 @@ u32 IndexRange::getCount()
 	return m_count;
 }
 
-SubMesh::SubMesh(const IndexRange & ir, Material * mat) :
-m_indexRange(ir),
-m_material(mat)
-{
-
-}
-
-const IndexRange & SubMesh::getIndexRange()
-{
-	return m_indexRange;
-}
-
-Material * SubMesh::getMaterial()
-{
-	return m_material;
-}
-
-Mesh::Mesh()
+Mesh::Mesh(	const VertexFormat & vFormat,
+			GLenum vUsage,
+			i32 vSize,
+			void * vData, 
+			GLenum iType,
+			GLenum iUsage,
+			GLenum iMode,
+			i32 iSize ,
+			void * iData,
+			u32 iCount) :
+m_vertexData(vFormat, vUsage, vSize, vData),
+m_indexData(iType, iUsage, iMode, iSize, iData),
+m_indexRange(0, iCount)
 {
 
 }
 
 Mesh::~Mesh()
 {
-	if(m_subMeshes)
-	{
-		delete[] m_subMeshes;
-		m_subMeshes = NULL;
-	}
-}
+} 
 
 const VertexArray & Mesh::getVertexArray()
 {
@@ -168,10 +148,10 @@ void Mesh::draw()
 {
 	m_vertexArray.bind();
 
-	glDrawElements(	m_indexData.getGLMode(),
-					sm->getIndexRange().getCount(),
-					m_indexData.getGLType(),
-					sm->getIndexRange.getStart() );
+	glDrawElements(	m_indexData.getMode(),
+					m_indexRange.getCount(),
+					m_indexData.getType(),
+					(void*)+m_indexRange.getStart() );
 
 	m_vertexArray.unbind();
 }

@@ -1,5 +1,8 @@
 #include "Plane.h"
 
+Plane::Plane()
+{}
+
 Plane::Plane(vec3 normal, f32 dist) :
 m_data(vec4(normalize(normal), dist))
 {}
@@ -30,16 +33,16 @@ Plane::Plane(const vec3 &a, const vec3 &b, const vec3 &c)
 
 f32 Plane::signedDistance(const vec3 &coord)
 {
-	return dot(m_data, vec4(point, 1.0f));
+	return dot(m_data, vec4(coord, 1.0f));
 }
 f32 Plane::signedDistance(const vec4 &hcoord)
 {
 	return dot(m_data, hcoord);
 }
 
-const vec3 & 	Plane::getNormal()
+vec3 Plane::getNormal()
 {
-	return m_data.xyz();
+	return vec3(m_data);
 }
 
 const f32 &		Plane::getDistance()

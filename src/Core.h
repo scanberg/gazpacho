@@ -24,12 +24,10 @@ typedef unsigned char	u8;
 typedef unsigned short	u16;
 typedef unsigned int	u32;
 
-typedef std::string 	String;
+typedef glm::half 		f16;
+typedef float 			f32;
+typedef double			f64;
 
-typedef std::vector 	Array;
-typedef std::list		List;
-
-using glm::half;
 using glm::hvec2;
 using glm::hvec3;
 using glm::hvec4;
@@ -50,5 +48,20 @@ using glm::cross;
 using glm::min;
 using glm::max;
 using glm::clamp;
+
+class Bone;
+class Bounds;
+class Camera;
+class Frame;
+class Frustum;
+class GameObject;
+class Material;
+class Mesh;
+class Material;
+class Module;
+class Plane;
+class Portal;
+class Skeleton;
+class Transform;
 
 #endif

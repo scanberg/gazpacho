@@ -10,7 +10,7 @@ Frustum::Frustum(const vec3 & eyePos, const Frame & frame, f32 farClip)
 	m_planes[BACK]		= Plane(-1.0f * m_planes[FRONT].getNormal(), eyePos + (frame.getPoint(CENTER) - eyePos) * farClip);
 }
 
-const Plane &getPlane(FrustumPlane plane)
+const Plane & Frustum::getPlane(FrustumPlane plane) const
 {
 	assert(-1 < plane && plane < 6);
 	return m_planes[plane];

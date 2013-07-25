@@ -2,15 +2,19 @@
 #define CAMERA_H
 
 #include "Core.h"
+#include "GameObject.h"
 
-class Camera
+class Camera : public GameObject
 {
 public:
-	f32 getFov();
-	f32 getNearClip();
-	f32 getFarClip();
-	f32 getFocalDistance();
-	f32 getFocalRange();
+	f32 getFov() const;
+	f32 getNearClip() const;
+	f32 getFarClip() const;
+	f32 getFocalDistance() const;
+	f32 getFocalRange() const;
+
+	const mat4 & getProjMatrix() const;
+	const mat4 & getViewMatrix() const;
 
 	void setFov(f32 fov);
 	void setNearClip(f32 near);
@@ -21,6 +25,8 @@ public:
 	void setupProjection(int width, int height);
 private:
 	mat4 m_projMatrix;
+	mat4 m_viewMatrix;
+
 	f32 m_fov;
 	f32 m_near;
 	f32 m_far;

@@ -22,7 +22,7 @@ public:
 	void setAttribPointers();
 
 private:
-	const i32 attributeCount = 6;
+	static const i32 attributeCount = 6;
 
 	void parseFormat( const char * format );
 	void validate();
@@ -55,7 +55,7 @@ public:
 
 	virtual void setData(i32 size, void * data);
 protected:
-	Buffer( BufferUsage usage );
+	Buffer( GLenum usage );
 
 	u32 m_bufferID;
 	GLenum m_usage;
@@ -67,7 +67,7 @@ protected:
 class VertexBuffer : public Buffer
 {
 public:
-	VertexBuffer( BufferUsage usage ) :
+	VertexBuffer( GLenum usage ) :
 	Buffer(usage)
 	{ m_target = GL_ARRAY_BUFFER; }
 };
@@ -75,7 +75,7 @@ public:
 class IndexBuffer : public Buffer
 {
 public:
-	IndexBuffer( BufferUsage usage ) :
+	IndexBuffer( GLenum usage ) :
 	Buffer(usage)
 	{ m_target = GL_ELEMENT_ARRAY_BUFFER; }
 };

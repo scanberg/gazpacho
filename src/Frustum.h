@@ -11,7 +11,7 @@ class Frustum
 {
 public:
 	Frustum(const vec3 & eyePos, const Frame & frame, f32 farClip);
-	const Plane &getPlane(FrustumPlane plane);
+	const Plane &getPlane(FrustumPlane plane) const;
 
 private:
 	Plane m_planes[6];

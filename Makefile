@@ -1,4 +1,4 @@
-Sources		= main.cpp
+Sources		= main.cpp Frame.cpp Frustum.cpp GL.cpp Mesh.cpp Module.cpp Plane.cpp Transform.cpp
 
 CFlags 		= -c -Wall -g -O3
 LDFlags 	= 

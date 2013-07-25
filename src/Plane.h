@@ -6,6 +6,7 @@
 class Plane
 {
 public:
+	Plane();
 	Plane(vec3 normal, f32 dist);
 	Plane(vec4 normAndDist);
 	Plane(vec3 normal, vec3 point);
@@ -14,10 +15,12 @@ public:
 	f32 signedDistance(const vec3 &coord);
 	f32 signedDistance(const vec4 &hcoord);
 
-	const vec3 & 	getNormal();
+	vec3		 	getNormal();
 	const f32 &		getDistance();
 	const vec4 &	getVec4();
 
 private:
 	vec4 m_data;
 };
+
+#endif

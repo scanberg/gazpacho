@@ -2,10 +2,11 @@
 #define PORTAL_H
 
 #include "Core.h"
+#include "GameObject.h"
 #include "Module.h"
 #include "Frame.h"
 
-class Portal
+class Portal : public GameObject
 {
 public:
 	Portal * getTargetPortal();

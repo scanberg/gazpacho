@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"m_index",
+				"m_indexRange"
+			],
+			[
+				"bott",
+				"bottomRight"
+			],
+			[
+				"top",
+				"topLeft"
+			],
+			[
 				"bottom",
 				"bottomRight"
 			],
@@ -39,7 +51,7 @@
 			"file": "src/Core.h",
 			"settings":
 			{
-				"buffer_size": 839,
+				"buffer_size": 1013,
 				"line_ending": "Windows"
 			}
 		},
@@ -47,7 +59,7 @@
 			"file": "src/Module.h",
 			"settings":
 			{
-				"buffer_size": 356,
+				"buffer_size": 583,
 				"line_ending": "Windows"
 			}
 		},
@@ -55,7 +67,7 @@
 			"file": "src/Plane.h",
 			"settings":
 			{
-				"buffer_size": 408,
+				"buffer_size": 420,
 				"line_ending": "Windows"
 			}
 		},
@@ -63,7 +75,7 @@
 			"file": "src/Plane.cpp",
 			"settings":
 			{
-				"buffer_size": 868,
+				"buffer_size": 878,
 				"line_ending": "Windows",
 				"name": "#include \"Plane.h\""
 			}
@@ -72,7 +84,7 @@
 			"file": "src/Frustum.h",
 			"settings":
 			{
-				"buffer_size": 329,
+				"buffer_size": 335,
 				"line_ending": "Windows"
 			}
 		},
@@ -80,25 +92,48 @@
 			"file": "src/Frustum.cpp",
 			"settings":
 			{
-				"buffer_size": 780,
+				"buffer_size": 796,
 				"line_ending": "Windows",
 				"name": "#include \"Frustum.h\""
 			}
 		},
 		{
-			"file": "src/Frame.h",
+			"file": "src/GL.h",
 			"settings":
 			{
-				"buffer_size": 304,
-				"line_ending": "Windows",
-				"name": "#ifndef FRAME_H"
+				"buffer_size": 1464,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/GL.cpp",
+			"settings":
+			{
+				"buffer_size": 4191,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/Mesh.h",
+			"settings":
+			{
+				"buffer_size": 1635,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/Mesh.cpp",
+			"settings":
+			{
+				"buffer_size": 2055,
+				"line_ending": "Windows"
 			}
 		},
 		{
 			"file": "src/Portal.h",
 			"settings":
 			{
-				"buffer_size": 269,
+				"buffer_size": 313,
 				"line_ending": "Windows"
 			}
 		},
@@ -114,7 +149,7 @@
 			"file": "src/Transform.h",
 			"settings":
 			{
-				"buffer_size": 464,
+				"buffer_size": 427,
 				"line_ending": "Windows"
 			}
 		},
@@ -122,7 +157,41 @@
 			"file": "src/GameObject.h",
 			"settings":
 			{
-				"buffer_size": 308,
+				"buffer_size": 435,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/main.cpp",
+			"settings":
+			{
+				"buffer_size": 46,
+				"line_ending": "Windows",
+				"name": "#include \"Camera.h\""
+			}
+		},
+		{
+			"file": "Makefile",
+			"settings":
+			{
+				"buffer_size": 875,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/Model.h",
+			"settings":
+			{
+				"buffer_size": 241,
+				"line_ending": "Windows",
+				"name": "#ifndef MODEL_H"
+			}
+		},
+		{
+			"file": "src/Camera.h",
+			"settings":
+			{
+				"buffer_size": 668,
 				"line_ending": "Windows"
 			}
 		},
@@ -136,10 +205,19 @@
 			}
 		},
 		{
+			"file": "src/Frame.h",
+			"settings":
+			{
+				"buffer_size": 310,
+				"line_ending": "Windows",
+				"name": "#ifndef FRAME_H"
+			}
+		},
+		{
 			"file": "src/Frame.cpp",
 			"settings":
 			{
-				"buffer_size": 339,
+				"buffer_size": 425,
 				"line_ending": "Windows",
 				"name": "#include \"Frame.h\""
 			}
@@ -148,7 +226,7 @@
 			"file": "src/Intersection.h",
 			"settings":
 			{
-				"buffer_size": 667,
+				"buffer_size": 830,
 				"line_ending": "Windows",
 				"name": "#ifndef INTERSECTION_H"
 			}
@@ -194,7 +272,7 @@
 	],
 	"find":
 	{
-		"height": 0.0
+		"height": 34.0
 	},
 	"find_in_files":
 	{
@@ -225,7 +303,7 @@
 	"groups":
 	[
 		{
-			"selected": 9,
+			"selected": 14,
 			"sheets":
 			[
 				{
@@ -234,15 +312,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 839,
+						"buffer_size": 1013,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								261,
-								261
+								624,
+								624
 							]
 						],
 						"settings":
@@ -250,7 +328,7 @@
 							"syntax": "Packages/C++/C++.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 540.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -261,15 +339,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 356,
+						"buffer_size": 583,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								179,
-								179
+								572,
+								572
 							]
 						],
 						"settings":
@@ -288,15 +366,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 408,
+						"buffer_size": 420,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								73,
-								73
+								83,
+								83
 							]
 						],
 						"settings":
@@ -316,15 +394,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 868,
+						"buffer_size": 878,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								156,
-								156
+								317,
+								317
 							]
 						],
 						"settings":
@@ -333,7 +411,7 @@
 							"syntax": "Packages/C++/C++.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 54.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -344,15 +422,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 329,
+						"buffer_size": 335,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								242,
-								242
+								293,
+								293
 							]
 						],
 						"settings":
@@ -371,15 +449,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 780,
+						"buffer_size": 796,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								717,
-								717
+								674,
+								674
 							]
 						],
 						"settings":
@@ -395,47 +473,131 @@
 				},
 				{
 					"buffer": 6,
-					"file": "src/Frame.h",
+					"file": "src/GL.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 304,
+						"buffer_size": 1464,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								265,
-								265
+								1411,
+								1411
 							]
 						],
 						"settings":
 						{
-							"auto_name": "#ifndef FRAME_H",
-							"syntax": "Packages/C++/C++.tmLanguage"
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1080.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 7,
-					"file": "src/Portal.h",
+					"file": "src/GL.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 269,
+						"buffer_size": 4191,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								227,
-								227
+								727,
+								727
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2862.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "src/Mesh.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1635,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1503,
+								1503
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1134.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "src/Mesh.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2055,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2001,
+								2001
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2322.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "src/Portal.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 313,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								230,
+								230
 							]
 						],
 						"settings":
@@ -449,7 +611,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 11,
 					"file": "src/Skeleton.h",
 					"semi_transient": false,
 					"settings":
@@ -476,20 +638,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 9,
+					"buffer": 12,
 					"file": "src/Transform.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 464,
+						"buffer_size": 427,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								358,
-								358
+								202,
+								202
 							]
 						],
 						"settings":
@@ -503,20 +665,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 10,
+					"buffer": 13,
 					"file": "src/GameObject.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 308,
+						"buffer_size": 435,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								128,
-								128
+								123,
+								123
 							]
 						],
 						"settings":
@@ -530,7 +692,118 @@
 					"type": "text"
 				},
 				{
-					"buffer": 11,
+					"buffer": 14,
+					"file": "src/main.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 46,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								46,
+								46
+							]
+						],
+						"settings":
+						{
+							"auto_name": "#include \"Camera.h\"",
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 15,
+					"file": "Makefile",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 875,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								233,
+								233
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Makefile/Makefile.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 16,
+					"file": "src/Model.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 241,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								151,
+								151
+							]
+						],
+						"settings":
+						{
+							"auto_name": "#ifndef MODEL_H",
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 17,
+					"file": "src/Camera.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 668,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								326,
+								326
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 18,
 					"file": "src/Transform.cpp",
 					"semi_transient": false,
 					"settings":
@@ -558,20 +831,48 @@
 					"type": "text"
 				},
 				{
-					"buffer": 12,
-					"file": "src/Frame.cpp",
+					"buffer": 19,
+					"file": "src/Frame.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 339,
+						"buffer_size": 310,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								229,
-								229
+								270,
+								270
+							]
+						],
+						"settings":
+						{
+							"auto_name": "#ifndef FRAME_H",
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 20,
+					"file": "src/Frame.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 425,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								425,
+								425
 							]
 						],
 						"settings":
@@ -586,20 +887,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 13,
+					"buffer": 21,
 					"file": "src/Intersection.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 667,
+						"buffer_size": 830,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								410,
-								410
+								0,
+								0
 							]
 						],
 						"settings":
@@ -614,7 +915,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 14,
+					"buffer": 22,
 					"file": "src/Bounds.h",
 					"semi_transient": false,
 					"settings":
@@ -626,8 +927,8 @@
 						"selection":
 						[
 							[
-								154,
-								154
+								76,
+								76
 							]
 						],
 						"settings":
@@ -645,7 +946,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 0.0
+		"height": 26.0
 	},
 	"input":
 	{
@@ -681,7 +982,7 @@
 	"project": "proj.sublime-project",
 	"replace":
 	{
-		"height": 0.0
+		"height": 48.0
 	},
 	"save_all_on_build": true,
 	"select_file":
