@@ -22,9 +22,15 @@ bool intersectSphereSphere(	Transform * tsphereA,
 
 bool intersectBoxFrustum(	Transform * tbox,
 							Bounds * box,
+							Transform * tfrustum,
 							Frustum * frustum);
 
-bool intersectFrustumSphere(Frustum * frustum,
+bool intersectFrustumPoint(	Transform * tfrustum,
+							Frustum * frustum,
+							const vec3 & point);
+
+bool intersectFrustumSphere(Transform * tfrustum,
+							Frustum * frustum,
 							Transform * tsphere,
 							Bounds * sphere);
 

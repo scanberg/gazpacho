@@ -17,5 +17,5 @@ private:
 	Mesh * 		m_mesh;
 	Material * 	m_material;
 	Skeleton * 	m_skeleton;
-
+	Camera * 	m_camera;
 };

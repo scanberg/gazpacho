@@ -14,10 +14,10 @@ public:
 	void addDynamicGameObject(GameObject * object);
 
 private:
-	Array 	m_staticGameObjects;
-	List	m_dynamicGameObjects;
+	Array<GameObject> 	m_staticGameObjects;
+	List<GameObject>	m_dynamicGameObjects;
 	
-	Array	m_portals;
+	Array<GameObject>	m_portals;
 };
 
 #endif
