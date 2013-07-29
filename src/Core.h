@@ -12,6 +12,9 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/half_float.hpp>
 #include <glm/gtc/quaternion.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_inverse.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #define EPSILON 1.0e-7
 #define PI		3.14159265359
@@ -36,6 +39,14 @@ using glm::vec2;
 using glm::vec3;
 using glm::vec4;
 
+using glm::ivec2;
+using glm::ivec3;
+using glm::ivec4;
+
+using glm::uvec2;
+using glm::uvec3;
+using glm::uvec4;
+
 using glm::mat2;
 using glm::mat3;
 using glm::mat4;
@@ -45,6 +56,7 @@ using glm::quat;
 using glm::normalize;
 using glm::dot;
 using glm::cross;
+using glm::length;
 using glm::min;
 using glm::max;
 using glm::clamp;

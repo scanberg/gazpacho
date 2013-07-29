@@ -1,12 +1,12 @@
 #include "Mesh.h"
 #include <memory.h>
 
-MeshData::MeshData(i32 size, void * data)
+MeshData::MeshData(u32 size, void * data)
 {
 	if(data)
 	{
-		m_data = malloc( size );
-		memcpy( m_data, data, size );
+		m_data = malloc( (size_t)size );
+		memcpy( m_data, data, (size_t)size );
 		m_size = size;
 	}
 	else
@@ -27,20 +27,18 @@ void * MeshData::getData()
 	return m_data;
 }
 
-i32 MeshData::getSize()
+u32 MeshData::getSize()
 {
 	return m_size;
 }
 
-void MeshData::setData(i32 size, void * data)
+void MeshData::setData(u32 size, void * data)
 {
-	if(data)
-	{
+	if(m_data)
 		free(m_data);
-		m_data = malloc( (size_t)size );
-		memcpy( m_data, data, (size_t)size );
-		m_size = size;
-	}
+	m_data = malloc( (size_t)size );
+	memcpy( m_data, data, (size_t)size );
+	m_size = size;
 }
 
 void MeshData::validate()
@@ -48,11 +46,12 @@ void MeshData::validate()
 
 }
 
-VertexData::VertexData(VertexFormat format, GLenum usage, i32 size, void * data) :
+VertexData::VertexData(VertexFormat format, GLenum usage, u32 size, void * data) :
 MeshData(size, data),
 m_format(format),
 m_vertexBuffer(usage)
 {
+	m_vertexBuffer.setData(size, data);
 	validate();
 }
 
@@ -71,12 +70,13 @@ const VertexBuffer & VertexData::getVertexBuffer()
 	return m_vertexBuffer;
 }
 
-IndexData::IndexData(GLenum type, GLenum usage, GLenum mode, i32 size, void * data) :
+IndexData::IndexData(GLenum type, GLenum usage, GLenum mode, u32 size, void * data) :
 MeshData(size, data),
 m_type(type),
 m_mode(mode),
 m_indexBuffer(usage)
 {
+	m_indexBuffer.setData(size, data);
 	validate();
 }
 
@@ -93,6 +93,11 @@ GLenum IndexData::getType()
 GLenum IndexData::getMode()
 {
 	return m_mode;
+}
+
+const IndexBuffer &	IndexData::getIndexBuffer()
+{
+	return m_indexBuffer;
 }
 
 void IndexData::validate()
@@ -120,19 +125,23 @@ u32 IndexRange::getCount()
 
 Mesh::Mesh(	const VertexFormat & vFormat,
 			GLenum vUsage,
-			i32 vSize,
+			u32 vSize,
 			void * vData, 
 			GLenum iType,
 			GLenum iUsage,
 			GLenum iMode,
-			i32 iSize ,
+			u32 iSize ,
 			void * iData,
 			u32 iCount) :
 m_vertexData(vFormat, vUsage, vSize, vData),
 m_indexData(iType, iUsage, iMode, iSize, iData),
 m_indexRange(0, iCount)
 {
-
+	m_vertexArray.bind();
+	m_vertexData.getVertexBuffer().bind();
+	m_indexData.getIndexBuffer().bind();
+	m_vertexData.getFormat().setAttribPointers();
+	m_vertexArray.unbind();
 }
 
 Mesh::~Mesh()

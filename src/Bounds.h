@@ -7,6 +7,8 @@
 class Bounds
 {
 public:
+	Bounds()
+	{}
 	Bounds(vec3 min, vec3 max, f32 radius) :
 	m_min(min),
 	m_max(max),

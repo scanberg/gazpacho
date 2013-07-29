@@ -40,7 +40,7 @@ GLenum VertexFormat::getType(VertexAttribute attr)
 	return m_types[attr];
 }
 
-void VertexFormat::setAttribPointers()
+void VertexFormat::setAttribPointers() const
 {
 	for(i32 i=0; i<attributeCount; ++i)
 	{
@@ -63,10 +63,13 @@ void VertexFormat::setAttribPointers()
 
 void VertexFormat::parseFormat(const char * format)
 {
+	printf("PARSING FORMAT %s \n",format);
 	if(format)
 	{
-		char * formatcpy = (char*)malloc( strlen(format) + 1 );
+		int len = strlen(format);
+		char * formatcpy = (char*)malloc( len + 1 );
 		strcpy(formatcpy,format);
+		formatcpy[len] = '\0';
 
 		i32 currentOffset = 0;
 		i32 target;
@@ -95,9 +98,14 @@ void VertexFormat::parseFormat(const char * format)
 
 			if(target > -1)
 			{
+				printf("Target is valid and is %c \n", pch[0]);
 				m_components[target] = atoi(++pch);
+				printf("Components are %i \n", m_components[target]);
+
 				++pch;
 				int size = 0;
+
+				printf("Type Parameter is %c \n", pch[0]);
 
 				if (pch[0] == 'f')
 				{
@@ -145,8 +153,10 @@ void VertexFormat::parseFormat(const char * format)
 				m_offsets[target] = currentOffset;
 				currentOffset += size * m_components[target];
 			}
+			pch = strtok(NULL, ":");
 		}
 		m_totalByteSize = currentOffset;
+		printf("totalByteSize %i \n", m_totalByteSize);
 	}
 }
 
@@ -167,11 +177,12 @@ void VertexFormat::validate()
 			return;
 		}
 	}
+	printf("VertexFormat seems valid \n");
 }
 
 
 
-Buffer::Buffer( GLenum usage ) :
+Buffer::Buffer( GLenum usage) :
 m_usage(usage)
 {
 	glGenBuffers(1, &m_bufferID);
@@ -182,17 +193,17 @@ Buffer::~Buffer()
 	glDeleteBuffers(1, &m_bufferID);
 }
 
-void Buffer::bind()
+void Buffer::bind() const
 {
 	glBindBuffer(m_target, m_bufferID);
 }
 
-void Buffer::unbind()
+void Buffer::unbind() const
 {
 	glBindBuffer(m_target, 0);
 }
 
-void Buffer::setData(i32 size, void * data)
+void Buffer::setData(u32 size, void * data)
 {
 	bind();
 	glBufferData(m_target, size, data, m_usage);

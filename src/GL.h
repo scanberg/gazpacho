@@ -19,7 +19,7 @@ public:
 	i32	getComponentCount(VertexAttribute attr);
 	GLenum getType(VertexAttribute attr);
 
-	void setAttribPointers();
+	void setAttribPointers() const;
 
 private:
 	static const i32 attributeCount = 6;
@@ -50,12 +50,12 @@ class Buffer
 public:
 	virtual ~Buffer();
 
-	virtual void bind();
-	virtual void unbind();
+	virtual void bind() const;
+	virtual void unbind() const;
 
-	virtual void setData(i32 size, void * data);
+	virtual void setData(u32 size, void * data);
 protected:
-	Buffer( GLenum usage );
+	Buffer(GLenum usage);
 
 	u32 m_bufferID;
 	GLenum m_usage;
@@ -67,7 +67,7 @@ protected:
 class VertexBuffer : public Buffer
 {
 public:
-	VertexBuffer( GLenum usage ) :
+	VertexBuffer(GLenum usage) :
 	Buffer(usage)
 	{ m_target = GL_ARRAY_BUFFER; }
 };
@@ -75,7 +75,7 @@ public:
 class IndexBuffer : public Buffer
 {
 public:
-	IndexBuffer( GLenum usage ) :
+	IndexBuffer(GLenum usage) :
 	Buffer(usage)
 	{ m_target = GL_ELEMENT_ARRAY_BUFFER; }
 };

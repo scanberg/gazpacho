@@ -7,6 +7,9 @@
 class Camera : public GameObject
 {
 public:
+	Camera();
+	~Camera();
+	
 	f32 getFov() const;
 	f32 getNearClip() const;
 	f32 getFarClip() const;
@@ -14,7 +17,7 @@ public:
 	f32 getFocalRange() const;
 
 	const mat4 & getProjMatrix() const;
-	const mat4 & getViewMatrix() const;
+	const mat4 & getViewMatrix();
 
 	void setFov(f32 fov);
 	void setNearClip(f32 near);
@@ -22,6 +25,7 @@ public:
 	void setFocalDistance(f32 focalDist);
 	void setFocalRange(f32 focalRange);
 
+	void setup();
 	void setupProjection(int width, int height);
 private:
 	mat4 m_projMatrix;

@@ -4,19 +4,20 @@
 #include "Core.h"
 #include "GameObject.h"
 #include "Module.h"
-#include "Frame.h"
 
 class Portal : public GameObject
 {
 public:
-	Portal * getTargetPortal();
-	
-	void setTargetPortal(Portal * portal);
-private:
-	Frame m_frame;
-	bool m_mirror;
+	Portal(f32 width, f32 height, Portal * m_targetPortal = NULL);
+	~Portal();
 
-	GameObject * m_targetPortal;
+	Portal * 		getTargetPortal();
+	const vec3 & 	getMin();
+	const vec3 &	getMax();
+	
+	void 			setTargetPortal(Portal * portal);
+private:
+	Portal * m_targetPortal;
 };
 
 #endif

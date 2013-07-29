@@ -3,14 +3,13 @@
 
 #include "Core.h"
 #include "Plane.h"
-#include "Frame.h"
 
 enum FrustumPlane { TOP, BOTTOM, LEFT, RIGHT, FRONT, BACK };
 
 class Frustum
 {
 public:
-	Frustum(const vec3 & eyePos, const Frame & frame, f32 farClip);
+	Frustum(const vec3 & eyePos, vec3 * corners, f32 farClip);
 	const Plane &getPlane(FrustumPlane plane) const;
 
 private:
