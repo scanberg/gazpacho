@@ -12,7 +12,7 @@ public:
 	
 	const std::vector<GameObject*> & 	getStaticGameObjects();
 	const std::list<GameObject*> & 		getDynamicGameObjects();
-	const std::vector<GameObject*> & 	getPortals();
+	const std::vector<Portal*> & 		getPortals();
 
 	void addGameObject(GameObject * object);
 	void removeGameObject(GameObject * object);

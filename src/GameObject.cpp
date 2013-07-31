@@ -1,6 +1,8 @@
 #include "GameObject.h"
 
 GameObject::GameObject() :
+m_flags(0),
+m_type(UNDEFINED),
 m_ownerModule(NULL)
 {
 
@@ -13,7 +15,12 @@ GameObject::~GameObject()
 
 bool GameObject::isStatic()
 {
-	return m_static;
+	return m_flags & GAMEOBJECT_STATIC_BIT;
+}
+
+bool GameObject::isDrawable()
+{
+	return m_flags & GAMEOBJECT_DRAWABLE_BIT;
 }
 
 const Transform & GameObject::getTransform()
@@ -29,6 +36,11 @@ const Bounds & GameObject::getBounds()
 Module * GameObject::getOwnerModule()
 {
 	return m_ownerModule;
+}
+
+GameObjectType GameObject::getType()
+{
+	return m_type;
 }
 
 const vec3 & GameObject::getPosition()
@@ -49,6 +61,11 @@ const vec3 & GameObject::getScale()
 const mat4 & GameObject::getPose()
 {
 	return m_transform.getPose();
+}
+
+const mat4 & GameObject::getInvPose()
+{
+	return m_transform.getInvPose();
 }
 
 vec3 GameObject::getEulerAngles()
@@ -100,4 +117,19 @@ void GameObject::rotateY(f32 angle)
 void GameObject::rotateZ(f32 angle)
 {
 	rotate(angle, vec3(0,0,1));
+}
+
+void GameObject::setFlags(u8 flags)
+{
+	m_flags = flags;
+}
+
+void GameObject::setType(GameObjectType type)
+{
+	m_type = type;
+}
+
+void GameObject::setOwnerModule(Module * module)
+{
+	m_ownerModule = module;
 }

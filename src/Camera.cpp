@@ -15,7 +15,8 @@ Camera::~Camera()
 
 const mat4 & Camera::getViewMatrix()
 {
-	m_viewMatrix = glm::inverse(getPose());
+    m_viewMatrix = glm::mat4_cast(glm::conjugate(getOrientation()));
+    m_viewMatrix = glm::translate(m_viewMatrix,-getPosition());
 	return m_viewMatrix;
 }
 

@@ -13,6 +13,7 @@ public:
 	const vec3 & getPosition();
 	const vec3 & getScale();
 	const mat4 & getPose();
+	const mat4 & getInvPose();
 
 	void setPosition(const vec3 & position);
 	void setOrientation(const quat & orientation);
@@ -20,6 +21,7 @@ public:
 	
 private:
 	mat4 m_localPose;
+	mat4 m_invLocalPose;
 	quat m_orientation;
 	vec3 m_position;
 	vec3 m_scale;

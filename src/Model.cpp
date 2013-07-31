@@ -3,6 +3,9 @@
 
 Model::Model(Mesh * mesh, Material * material)
 {
+	setFlags(GAMEOBJECT_DRAWABLE_BIT);
+	setType(MODEL);
+
 	if(mesh)
 		m_mesh = mesh;
 	m_material = material;

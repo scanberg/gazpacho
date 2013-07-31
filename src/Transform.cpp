@@ -39,6 +39,13 @@ const mat4 & Transform::getPose()
 	return m_localPose;
 }
 
+
+const mat4 & Transform::getInvPose()
+{
+	m_invLocalPose = glm::inverse(getPose());
+	return m_invLocalPose;
+}
+
 void Transform::setPosition(const vec3 & position)
 {
 	m_position = position;

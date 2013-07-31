@@ -3,37 +3,23 @@
 #include "Shader.h"
 #include "Mesh.h"
 #include "Model.h"
+#include "Module.h"
 
 bool initGL(int width=800, int height=600, bool fullscreen=false);
 void cleanup();
 void controlCamera(Camera * camera);
+
+bool g_toggle;
 
 int main()
 {
 	if(!initGL())
 		return 1;
 
-	Shader shader;
+	Portal::init();
+
+	Shader shader("res/shaders/portal_vert.glsl","res/shaders/portal_frag.glsl");
 	shader.bind();
-
-	f32 vData[12] = {   -1, 1, 0,
-						 1, 1, 0,
-						-1,-1, 0,
-						 1,-1, 0 };
-
-	u32 iData[6] = { 	0, 2, 1,
-						1, 2, 3 };
-
-	Mesh quad = Mesh(	"v3f",
-						GL_STATIC_DRAW,
-						12*sizeof(f32),
-						vData,
-						GL_UNSIGNED_INT,
-						GL_STATIC_DRAW,
-						GL_TRIANGLES,
-						6*sizeof(u32),
-						iData,
-						6);
 
 	f32 vCube[24] = {	-0.5, 0.5,-0.5,
 						 0.5, 0.5,-0.5,
@@ -99,34 +85,64 @@ int main()
 	wallRight.setScale(vec3(1.0,2.0,5.0));
 	wallRight.setPosition(vec3(5.0,0,0));
 
-	Portal portal(1.0f, 2.0f);
-	portal.setTargetPortal(&portal);
+	Model floorModel(&cube, &white);
+	floorModel.setScale(vec3(10,1,5));
+	floorModel.setPosition(vec3(0,-1.5,0));
+
+	Model cubeModel(&cube, &green);
+	cubeModel.setPosition(vec3(2,0,0));
+
+	Portal portalA(3.0f, 3.0f);
+	portalA.setPosition(vec3(0,0,2.2));
+	portalA.rotateY(180.0f);
+
+	Portal portal(3.0f, 3.0f);
+	portal.setPosition(vec3(0,0,2.2));
+	portal.setTargetPortal(&portalA);
+
+	Module moduleA;
+
+	moduleA.addGameObject(&wallFront);
+	//moduleA.addGameObject(&wallBack);
+	moduleA.addGameObject(&wallLeft);
+	moduleA.addGameObject(&wallRight);
+	moduleA.addGameObject(&floorModel);
+	moduleA.addGameObject(&cubeModel);
+	moduleA.addGameObject(&portalA);
 
 	Camera camera;
-	camera.translate(vec3(0, 2, 5));
+	camera.translate(vec3(0, 1, 5));
 	camera.setupProjection(800,600);
 
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+	glfwSwapInterval(1);
 
 	while(true)
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		if(glfwGetKey('Q'))
+			g_toggle = true;
+		if(glfwGetKey('E'))
+			g_toggle = false;
 		controlCamera(&camera);
 		camera.setup();
 
-		//model.rotateY(0.1f);
-		wallFront.draw();
-		wallBack.draw();
-		wallLeft.draw();
-		wallRight.draw();
-
+		//moduleA.draw();
+		if(g_toggle)
+			portal.draw(&camera);
+		else
+			moduleA.draw();
+		
 		glfwSwapBuffers();
 
 		if(glfwGetKey(GLFW_KEY_ESC))
 			break;
 	}
 
+	Portal::cleanup();
 	cleanup();
 
 	return 0;
@@ -138,7 +154,7 @@ void controlCamera(Camera * camera)
 	moveVec *= 0.1f;
 	camera->move(moveVec);
 
-	vec2 lookVec(	glfwGetKey(GLFW_KEY_RIGHT)-glfwGetKey(GLFW_KEY_LEFT),
+	vec2 lookVec(	glfwGetKey(GLFW_KEY_LEFT)-glfwGetKey(GLFW_KEY_RIGHT),
 					glfwGetKey(GLFW_KEY_UP)-glfwGetKey(GLFW_KEY_DOWN));
 	camera->rotateY(lookVec.x);
 }
@@ -157,7 +173,7 @@ bool initGL(int width, int height, bool fullscreen)
 	if(!glfwOpenWindow(	width,
 						height,
 						8, 8, 8, 8,
-						32, 0,
+						32, 8,
 						fs))
 	{
 		printf("Could not create GLFW-window\n");

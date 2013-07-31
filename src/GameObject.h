@@ -8,10 +8,14 @@
 
 enum GameObjectType	{ UNDEFINED, CAMERA, MODEL, PORTAL };
 
+#define GAMEOBJECT_STATIC_BIT 	0x01
+#define GAMEOBJECT_DRAWABLE_BIT	0x02
+
 class GameObject
 {
 public:
 	bool 				isStatic();
+	bool				isDrawable();
 	const Transform & 	getTransform();
 	const Bounds & 		getBounds();
 	Module * 			getOwnerModule();
@@ -24,6 +28,7 @@ public:
 	const quat &		getOrientation();
 	const vec3 &		getScale();
 	const mat4 & 		getPose();
+	const mat4 &		getInvPose();
 
 	vec3				getEulerAngles();
 
@@ -42,10 +47,15 @@ public:
 
 
 protected:
+	friend class Module;
 	GameObject();
 	virtual ~GameObject();
 
-	bool 			m_static;
+	void setFlags(u8 flags);
+	void setType(GameObjectType type);
+	void setOwnerModule(Module * module);
+
+	u8				m_flags;
 	GameObjectType 	m_type;
 	Transform 		m_transform;
 	Bounds 			m_bounds;
