@@ -5,7 +5,7 @@ Camera::Camera()
 {
 	m_fov = 60.0;
 	m_near = 0.1;
-	m_far = 10.0;
+	m_far = 100.0;
 }
 
 Camera::~Camera()

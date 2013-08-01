@@ -19,6 +19,8 @@ public:
 	const f32 &		getDistance();
 	const vec4 &	getVec4();
 
+	void transform(const mat4 &transform);
+
 private:
 	vec4 m_data;
 };

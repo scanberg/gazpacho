@@ -83,12 +83,18 @@ void Portal::draw(Camera * cam)
 {
 	const Shader * shader = Shader::getBoundShader();
 	mat4 portalTransform = getPose();
+	int planeLoc = -1;
 
 	if(shader)
+	{
 		glUniformMatrix4fv(shader->getModelMatrixLocation(), 1, GL_FALSE, glm::value_ptr(portalTransform));
+		planeLoc = shader->getUniformLocation("clipPlane");
+	}
 
 	if(m_targetPortal && m_targetPortal->getOwnerModule())
 	{
+		//m_bounds.drawBB();
+
 		glEnable(GL_STENCIL_TEST);
 		glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
 		glDepthMask(GL_FALSE);
@@ -98,6 +104,7 @@ void Portal::draw(Camera * cam)
 		// draw stencil pattern
 		glStencilMask(0xFF);
 		glClear(GL_STENCIL_BUFFER_BIT);  // needs mask=0xFF
+
 		Portal::m_quad->draw();
 
 		glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
@@ -110,14 +117,27 @@ void Portal::draw(Camera * cam)
 		glStencilFunc(GL_EQUAL, 1, 0xFF);
 
 		mat4 Pa = glm::translate(mat4(),getPosition()) * glm::mat4_cast(getOrientation());
+		mat4 P2P = glm::rotate(mat4(), 180.0f, vec3(0,1,0));
    		mat4 PbInv = glm::mat4_cast(glm::conjugate(m_targetPortal->getOrientation())) * glm::translate(mat4(),m_targetPortal->getPosition());
    		mat4 C = glm::translate(mat4(),cam->getPosition()) * glm::mat4_cast(cam->getOrientation());
 
-		mat4 viewMatrix = PbInv * Pa * C;
+		mat4 viewMatrix = glm::inverse(PbInv * P2P * Pa * C);
 		if(shader)
 			glUniformMatrix4fv(shader->getViewMatrixLocation(), 1, GL_FALSE, glm::value_ptr(viewMatrix));
 
+		vec3 normal = vec3(0,0,-1);
+		vec3 point = getPosition();
+
+		Plane clipPlane(normal, point);
+		clipPlane.transform(viewMatrix);
+
+		if(planeLoc > -1)
+			glUniform4fv(planeLoc, 1, glm::value_ptr(clipPlane.getVec4()));
+
 		m_targetPortal->getOwnerModule()->draw();
+
+		if(planeLoc > -1)
+			glUniform4f(planeLoc, 0,0,0,0);
 
 		glDisable(GL_STENCIL_TEST);
 

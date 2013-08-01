@@ -53,3 +53,8 @@ const vec4 & 	Plane::getVec4()
 {
 	return m_data;
 }
+
+void Plane::transform(const mat4 & transform)
+{
+	m_data = glm::inverse(glm::transpose(transform)) * m_data;
+}

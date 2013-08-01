@@ -93,17 +93,17 @@ int main()
 	cubeModel.setPosition(vec3(2,0,0));
 
 	Portal portalA(3.0f, 3.0f);
-	portalA.setPosition(vec3(0,0,2.2));
+	portalA.setPosition(vec3(0,0,0));
 	portalA.rotateY(180.0f);
 
 	Portal portal(3.0f, 3.0f);
-	portal.setPosition(vec3(0,0,2.2));
+	portal.setPosition(vec3(0,0,0));
 	portal.setTargetPortal(&portalA);
 
 	Module moduleA;
 
 	moduleA.addGameObject(&wallFront);
-	//moduleA.addGameObject(&wallBack);
+	moduleA.addGameObject(&wallBack);
 	moduleA.addGameObject(&wallLeft);
 	moduleA.addGameObject(&wallRight);
 	moduleA.addGameObject(&floorModel);
