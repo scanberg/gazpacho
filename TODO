@@ -1,0 +1,12 @@
+- Fix Portal Plane Clipping to TargetPortals transform
+- GameObject Module transfer
+- Frustum culling (Variable plane count)
+- Custom frustum
+- Manager base class
+- Hashmap class
+- LoadMeshes function, load into module
+- Custom array class (chunk allocator) ???
+- Integrate physics (Newton Dynamics?)
+- Integrate skeletal animation
+- Vertex shader skinning
+- StringID
