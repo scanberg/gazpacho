@@ -94,10 +94,10 @@ int main()
 
 	Portal portalA(3.0f, 3.0f);
 	portalA.setPosition(vec3(0,0,0));
-	portalA.rotateY(180.0f);
+	portalA.rotateY(-90.0f);
 
 	Portal portal(3.0f, 3.0f);
-	portal.setPosition(vec3(0,0,0));
+	portal.setPosition(vec3(0,0,4));
 	portal.setTargetPortal(&portalA);
 
 	Module moduleA;
@@ -111,7 +111,7 @@ int main()
 	moduleA.addGameObject(&portalA);
 
 	Camera camera;
-	camera.translate(vec3(0, 1, 5));
+	camera.translate(vec3(0, 0, 5));
 	camera.setupProjection(800,600);
 
 	glEnable(GL_DEPTH_TEST);
@@ -127,6 +127,10 @@ int main()
 			g_toggle = true;
 		if(glfwGetKey('E'))
 			g_toggle = false;
+		if(glfwGetKey('Z'))
+			portalA.rotateY(-1.f);
+		if(glfwGetKey('X'))
+			portalA.rotateY(1.f);
 		controlCamera(&camera);
 		camera.setup();
 

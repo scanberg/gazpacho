@@ -6,11 +6,11 @@ uniform vec3 color = vec3(1.0);
 
 in vec3 in_position;
 out vec4 Color;
-out vec4 WorldPos;
+out vec4 ViewPos;
 
 void main(void)
 {
     gl_Position = projMatrix * viewMatrix * modelMatrix * vec4(in_position, 1.0);
-    WorldPos =  viewMatrix * modelMatrix * vec4(in_position, 1.0);
+    ViewPos =  viewMatrix * modelMatrix * vec4(in_position, 1.0);
 	Color = vec4(color, 1.0);
 }

@@ -117,16 +117,15 @@ void Portal::draw(Camera * cam)
 		glStencilFunc(GL_EQUAL, 1, 0xFF);
 
 		mat4 Pa = glm::translate(mat4(),getPosition()) * glm::mat4_cast(getOrientation());
-		mat4 P2P = glm::rotate(mat4(), 180.0f, vec3(0,1,0));
-   		mat4 PbInv = glm::mat4_cast(glm::conjugate(m_targetPortal->getOrientation())) * glm::translate(mat4(),m_targetPortal->getPosition());
-   		mat4 C = glm::translate(mat4(),cam->getPosition()) * glm::mat4_cast(cam->getOrientation());
+   		mat4 PbInv = glm::mat4_cast(glm::conjugate(m_targetPortal->getOrientation())) * glm::translate(mat4(),-m_targetPortal->getPosition());
+   		mat4 CInv = glm::mat4_cast(glm::conjugate(cam->getOrientation())) * glm::translate(mat4(),-cam->getPosition());
 
-		mat4 viewMatrix = glm::inverse(PbInv * P2P * Pa * C);
-		if(shader)
+		mat4 viewMatrix = CInv * Pa * PbInv;
+		if(shader) 
 			glUniformMatrix4fv(shader->getViewMatrixLocation(), 1, GL_FALSE, glm::value_ptr(viewMatrix));
 
-		vec3 normal = vec3(0,0,-1);
-		vec3 point = getPosition();
+		vec3 normal = glm::mat3_cast((m_targetPortal->getOrientation())) * vec3(0,0,-1);
+		vec3 point = -m_targetPortal->getPosition();
 
 		Plane clipPlane(normal, point);
 		clipPlane.transform(viewMatrix);
