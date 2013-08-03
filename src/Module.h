@@ -3,6 +3,8 @@
 
 #include "Core.h"
 #include "GameObject.h"
+#include "Camera.h"
+#include "Portal.h"
 
 class Module
 {
@@ -17,7 +19,8 @@ public:
 	void addGameObject(GameObject * object);
 	void removeGameObject(GameObject * object);
 
-	void draw();
+	void draw(Camera * camera);
+	void drawWithoutPortals(Camera * camera = NULL);
 
 private:
 	std::vector<GameObject*> 	m_staticGameObjects;

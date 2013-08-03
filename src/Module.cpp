@@ -30,10 +30,15 @@ void Module::addGameObject(GameObject * object)
 {
 	if(object)
 	{
-		if(object->isStatic())
-			m_staticGameObjects.push_back(object);
+		if(object->getType() == PORTAL)
+			m_portals.push_back((Portal*)object);
 		else
-			m_dynamicGameObjects.push_back(object);
+		{
+			if(object->isStatic())
+				m_staticGameObjects.push_back(object);
+			else
+				m_dynamicGameObjects.push_back(object);
+		}
 
 		object->setOwnerModule(this);
 	}
@@ -44,7 +49,7 @@ void Module::removeGameObject(GameObject * object)
 
 }
 
-void Module::draw()
+void Module::draw(Camera * camera)
 {
 	std::list<Model*> renderList;
 
@@ -75,4 +80,41 @@ void Module::draw()
 		(*it)->draw();
 	}
 
+	for(u32 i=0; i<m_portals.size(); ++i)
+	{
+		m_portals[i]->draw(camera);
+	}
+
+}
+
+void Module::drawWithoutPortals(Camera * camera)
+{
+	std::list<Model*> renderList;
+
+	for(u32 i=0; i<m_staticGameObjects.size(); ++i)
+	{
+		if(m_staticGameObjects[i]->getType() == MODEL)
+		{
+			Model * model = (Model*)m_staticGameObjects[i];
+			renderList.push_back(model);
+		}
+	}
+
+	for(std::list<GameObject*>::iterator it=m_dynamicGameObjects.begin();
+		it != m_dynamicGameObjects.end();
+		++it)
+	{
+		if((*it)->getType() == MODEL)
+		{
+			Model * model = (Model*)(*it);
+			renderList.push_back(model);
+		}
+	}
+
+	for(std::list<Model*>::iterator it = renderList.begin();
+		it != renderList.end();
+		++it)
+	{
+		(*it)->draw();
+	}
 }

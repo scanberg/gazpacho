@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "Module.h"
 
 GameObject::GameObject() :
 m_flags(0),

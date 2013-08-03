@@ -1,5 +1,9 @@
 #include "Portal.h"
 #include "Shader.h"
+#include "Camera.h"
+#include "Mesh.h"
+#include "Plane.h"
+#include "Module.h"
 
 Mesh * Portal::m_quad = NULL;
 
@@ -31,7 +35,8 @@ void Portal::cleanup()
 		delete m_quad;
 }
 
-Portal::Portal(f32 width, f32 height, Portal * m_targetPortal)
+Portal::Portal(f32 width, f32 height, Portal * targetPortal) :
+m_targetPortal(targetPortal)
 {
 	assert(width > 0);
 	assert(height > 0);
@@ -46,6 +51,8 @@ Portal::Portal(f32 width, f32 height, Portal * m_targetPortal)
 	m_bounds = Bounds(min, max, radius);
 
 	setScale(vec3(width, height, 1.0));
+
+	setType(PORTAL);
 }
 
 Portal::~Portal()
@@ -91,7 +98,14 @@ void Portal::draw(Camera * cam)
 		planeLoc = shader->getUniformLocation("clipPlane");
 	}
 
-	if(m_targetPortal && m_targetPortal->getOwnerModule())
+	vec3 n = glm::mat3_cast((getOrientation())) * vec3(0,0,1);
+	vec3 p = -getPosition();
+
+	Plane plane(n, p);
+	//if(glm::dot(vec4(cam->getPosition(),1.0f), plane.getVec4()) < 0.0f)
+	//	return;
+
+	if(shader && m_targetPortal && m_targetPortal->getOwnerModule())
 	{
 		//m_bounds.drawBB();
 
@@ -105,6 +119,12 @@ void Portal::draw(Camera * cam)
 		glStencilMask(0xFF);
 		glClear(GL_STENCIL_BUFFER_BIT);  // needs mask=0xFF
 
+		mat4 proj = cam->getProjMatrix();
+		proj[2][2] = 1.0f;
+		//proj[2][3] = 1.0f;
+		proj[3][2] = 1.0f;
+
+		glUniformMatrix4fv(shader->getProjMatrixLocation(), 1, GL_FALSE, glm::value_ptr(proj));
 		Portal::m_quad->draw();
 
 		glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
@@ -121,8 +141,9 @@ void Portal::draw(Camera * cam)
    		mat4 CInv = glm::mat4_cast(glm::conjugate(cam->getOrientation())) * glm::translate(mat4(),-cam->getPosition());
 
 		mat4 viewMatrix = CInv * Pa * PbInv;
-		if(shader) 
-			glUniformMatrix4fv(shader->getViewMatrixLocation(), 1, GL_FALSE, glm::value_ptr(viewMatrix));
+
+		glUniformMatrix4fv(shader->getViewMatrixLocation(), 1, GL_FALSE, glm::value_ptr(viewMatrix));
+		glUniformMatrix4fv(shader->getProjMatrixLocation(), 1, GL_FALSE, glm::value_ptr(cam->getProjMatrix()));
 
 		vec3 normal = glm::mat3_cast((m_targetPortal->getOrientation())) * vec3(0,0,-1);
 		vec3 point = -m_targetPortal->getPosition();
@@ -133,7 +154,7 @@ void Portal::draw(Camera * cam)
 		if(planeLoc > -1)
 			glUniform4fv(planeLoc, 1, glm::value_ptr(clipPlane.getVec4()));
 
-		m_targetPortal->getOwnerModule()->draw();
+		m_targetPortal->getOwnerModule()->drawWithoutPortals(cam);
 
 		if(planeLoc > -1)
 			glUniform4f(planeLoc, 0,0,0,0);

@@ -1,3 +1,4 @@
+#include "Core.h"
 #include "Camera.h"
 #include "Portal.h"
 #include "Shader.h"
@@ -30,18 +31,18 @@ int main()
 						-0.5,-0.5, 0.5,
 						 0.5,-0.5, 0.5 };
 
-	u32 iCube[36] = {	0,2,1,	//Front
-						1,2,3,
-						4,0,5,	//Top
-						0,1,5,
-						4,5,6,	//Back
-						6,5,7,
-						3,2,7,	//Bottom
-						2,6,7,
-						1,3,5,	//Right
-						3,7,5,
-						0,4,6,	//Left
-						0,6,2};
+	u32 iCube[36] = {	0,1,2,	//Front
+						1,3,2,
+						0,4,5,	//Top
+						1,0,5,
+						5,4,6,	//Back
+						5,6,7,
+						2,3,7,	//Bottom
+						6,2,7,
+						3,1,5,	//Right
+						3,5,7,
+						4,0,6,	//Left
+						0,2,6};
 
 	Mesh cube = Mesh(	"v3f",
 						GL_STATIC_DRAW,
@@ -93,7 +94,7 @@ int main()
 	cubeModel.setPosition(vec3(2,0,0));
 
 	Portal portalA(3.0f, 3.0f);
-	portalA.setPosition(vec3(0,0,0));
+	portalA.setPosition(vec3(-2,0,0));
 	portalA.rotateY(-90.0f);
 
 	Portal portal(3.0f, 3.0f);
@@ -114,7 +115,24 @@ int main()
 	camera.translate(vec3(0, 0, 5));
 	camera.setupProjection(800,600);
 
+	vec4 v(0.5,0.5,-1,1);
+	mat4 proj = glm::perspective(60.0f, 4.0f/3.0f, 0.1f, 100.0f);
+	proj[2][2] = 0.0f;
+	proj[2][3] = 0.0f;
+	proj[3][2] = 0.0f;
+	proj[3][3] = 1.0f;
+
+	v = proj * v;
+	v = v / v.w;
+	printf("matrix : \n");
+	for(int i=0; i<4; ++i)
+	{
+		printf("%f, %f, %f, %f \n", proj[0][i], proj[1][i], proj[2][i], proj[3][i]);
+	}
+	printf("vector! ( %f, %f, %f, %f ) \n", v.x, v.y, v.z, v.w);
+
 	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 	glfwSwapInterval(1);
@@ -138,7 +156,7 @@ int main()
 		if(g_toggle)
 			portal.draw(&camera);
 		else
-			moduleA.draw();
+			moduleA.draw(&camera);
 		
 		glfwSwapBuffers();
 

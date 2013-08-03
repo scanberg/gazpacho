@@ -4,7 +4,6 @@
 #include "Core.h"
 #include "Transform.h"
 #include "Bounds.h"
-#include "Module.h"
 
 enum GameObjectType	{ UNDEFINED, CAMERA, MODEL, PORTAL };
 
