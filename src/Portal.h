@@ -13,6 +13,8 @@ public:
 	Portal(f32 width, f32 height, Portal * targetPortal = NULL);
 	~Portal();
 
+	bool 			isMirror();
+
 	Portal * 		getTargetPortal();
 	const vec3 & 	getMin();
 	const vec3 &	getMax();

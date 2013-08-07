@@ -27,6 +27,8 @@ public:
 
 	void setup();
 	void setupProjection(int width, int height);
+
+	void render();
 private:
 	mat4 m_projMatrix;
 	mat4 m_viewMatrix;

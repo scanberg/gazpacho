@@ -26,8 +26,10 @@ public:
 	const vec3 &		getPosition();
 	const quat &		getOrientation();
 	const vec3 &		getScale();
-	const mat4 & 		getPose();
-	const mat4 &		getInvPose();
+	mat4		 		getPose();
+	mat4				getInvPose();
+	mat4				getModelMatrix();
+	mat4				getInvModelMatrix();
 
 	vec3				getEulerAngles();
 

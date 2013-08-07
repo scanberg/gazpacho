@@ -1,7 +1,6 @@
 #include "Transform.h"
 
 Transform::Transform() :
-m_localPose(),
 m_orientation(),
 m_position(),
 m_scale(vec3(1.0))
@@ -29,21 +28,41 @@ const vec3 & Transform::getScale()
 	return m_scale;
 }
 
-const mat4 & Transform::getPose()
+mat4 Transform::getModelMatrix()
 {
-	// REMOVE WHEN A GLOBAL UPDATE IS IN PLACE
-	m_localPose = glm::scale(mat4(), m_scale);
-	m_localPose = glm::mat4_cast(m_orientation) * m_localPose;
-	m_localPose = glm::translate(m_localPose, m_position);
-
-	return m_localPose;
+	// REMOVE WHEN A GLOBAL UPDATE IS IN PLACE, OR?
+	mat4 pose;
+	pose = 	glm::translate(mat4(), m_position) *
+			glm::mat4_cast(m_orientation) *
+			glm::scale(mat4(), m_scale);
+	return pose;
 }
 
 
-const mat4 & Transform::getInvPose()
+mat4 Transform::getInvModelMatrix()
 {
-	m_invLocalPose = glm::inverse(getPose());
-	return m_invLocalPose;
+	mat4 pose;
+	pose = 	glm::scale(mat4(), 1.0f/m_scale) *
+	glm::mat4_cast(glm::conjugate(m_orientation)) *
+	glm::translate(mat4(), -m_position);
+	return pose;
+}
+
+mat4 Transform::getPose()
+{
+	// REMOVE WHEN A GLOBAL UPDATE IS IN PLACE, OR?
+	mat4 pose;
+	pose = 	glm::translate(mat4(), m_position) *
+			glm::mat4_cast(m_orientation);
+	return pose;
+}
+
+mat4 Transform::getInvPose()
+{
+	mat4 pose;
+	pose = 	glm::mat4_cast(glm::conjugate(m_orientation)) *
+			glm::translate(mat4(), -m_position);
+	return pose;
 }
 
 void Transform::setPosition(const vec3 & position)

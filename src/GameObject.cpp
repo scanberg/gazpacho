@@ -59,14 +59,24 @@ const vec3 & GameObject::getScale()
 	return m_transform.getScale();
 }
 
-const mat4 & GameObject::getPose()
+mat4 GameObject::getPose()
 {
 	return m_transform.getPose();
 }
 
-const mat4 & GameObject::getInvPose()
+mat4 GameObject::getInvPose()
 {
 	return m_transform.getInvPose();
+}
+
+mat4 GameObject::getModelMatrix()
+{
+	return m_transform.getModelMatrix();
+}
+
+mat4 GameObject::getInvModelMatrix()
+{
+	return m_transform.getInvModelMatrix();
 }
 
 vec3 GameObject::getEulerAngles()

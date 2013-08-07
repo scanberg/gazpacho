@@ -1,5 +1,6 @@
 #include "Camera.h"
 #include "Shader.h"
+#include "Module.h"
 
 Camera::Camera()
 {
@@ -39,4 +40,12 @@ void Camera::setup()
 void Camera::setupProjection(int width, int height)
 {
 	m_projMatrix = glm::perspective(m_fov, (float)width/(float)height, m_near, m_far);
+}
+
+void Camera::render()
+{
+	setup();
+	Module * module = getOwnerModule();
+	if(module)
+		module->draw(this);
 }

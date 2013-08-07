@@ -8,7 +8,8 @@
 
 bool initGL(int width=800, int height=600, bool fullscreen=false);
 void cleanup();
-void controlCamera(Camera * camera);
+void handleCamera(Camera * camera);
+bool intersectionLinePortal(vec3 start, vec3 end, const Portal & portal);
 
 bool g_toggle;
 
@@ -70,57 +71,101 @@ int main()
 	Material yellow;
 	yellow.setColor(vec3(1,1,0));
 
-	Model wallFront(&cube, &red);
-	wallFront.setScale(vec3(10.0,2.0,1.0));
-	wallFront.setPosition(vec3(0,0,-2.5));
+	// MODULE A
 
-	Model wallBack(&cube, &blue);
-	wallBack.setScale(vec3(10.0,2.0,1.0));
-	wallBack.setPosition(vec3(0,0,2.5));
+	Model wallFrontA(&cube, &red);
+	wallFrontA.setScale(vec3(10.0,2.0,1.0));
+	wallFrontA.setPosition(vec3(0,0,-2.5));
 
-	Model wallLeft(&cube, &green);
-	wallLeft.setScale(vec3(1.0,2.0,5.0));
-	wallLeft.setPosition(vec3(-5.0,0,0));
+	Model wallBackA(&cube, &blue);
+	wallBackA.setScale(vec3(10.0,2.0,1.0));
+	wallBackA.setPosition(vec3(0,0,2.5));
 
-	Model wallRight(&cube, &yellow);
-	wallRight.setScale(vec3(1.0,2.0,5.0));
-	wallRight.setPosition(vec3(5.0,0,0));
+	Model wallLeftA(&cube, &green);
+	wallLeftA.setScale(vec3(1.0,2.0,5.0));
+	wallLeftA.setPosition(vec3(-5.0,0,0));
 
-	Model floorModel(&cube, &white);
-	floorModel.setScale(vec3(10,1,5));
-	floorModel.setPosition(vec3(0,-1.5,0));
+	Model wallRightA(&cube, &yellow);
+	wallRightA.setScale(vec3(1.0,2.0,5.0));
+	wallRightA.setPosition(vec3(5.0,0,0));
 
-	Model cubeModel(&cube, &green);
-	cubeModel.setPosition(vec3(2,0,0));
+	Model floorModelA(&cube, &white);
+	floorModelA.setScale(vec3(10,1,5));
+	floorModelA.setPosition(vec3(0,-1.5,0));
+
+	Model cubeModelA(&cube, &green);
+	cubeModelA.setPosition(vec3(2,0,0));
 
 	Portal portalA(3.0f, 3.0f);
-	portalA.setPosition(vec3(-2,0,0));
-	portalA.rotateY(-90.0f);
-
-	Portal portal(3.0f, 3.0f);
-	portal.setPosition(vec3(0,0,4));
-	portal.setTargetPortal(&portalA);
+	portalA.setPosition(vec3(-4.49,0,0));
+	portalA.rotateY(90.0f);
 
 	Module moduleA;
 
-	moduleA.addGameObject(&wallFront);
-	moduleA.addGameObject(&wallBack);
-	moduleA.addGameObject(&wallLeft);
-	moduleA.addGameObject(&wallRight);
-	moduleA.addGameObject(&floorModel);
-	moduleA.addGameObject(&cubeModel);
+	moduleA.addGameObject(&wallFrontA);
+	moduleA.addGameObject(&wallBackA);
+	moduleA.addGameObject(&wallLeftA);
+	moduleA.addGameObject(&wallRightA);
+	moduleA.addGameObject(&floorModelA);
+	moduleA.addGameObject(&cubeModelA);
 	moduleA.addGameObject(&portalA);
 
+	// MODULE B
+
+	Model wallFrontB(&cube, &white);
+	wallFrontB.setScale(vec3(10.0,2.0,1.0));
+	wallFrontB.setPosition(vec3(0,0,-2.5));
+
+	Model wallBackB(&cube, &green);
+	wallBackB.setScale(vec3(10.0,2.0,1.0));
+	wallBackB.setPosition(vec3(0,0,2.5));
+
+	Model wallLeftB(&cube, &red);
+	wallLeftB.setScale(vec3(1.0,2.0,5.0));
+	wallLeftB.setPosition(vec3(-5.0,0,0));
+
+	Model wallRightB(&cube, &yellow);
+	wallRightB.setScale(vec3(1.0,2.0,5.0));
+	wallRightB.setPosition(vec3(5.0,0,0));
+
+	Model floorModelB(&cube, &blue);
+	floorModelB.setScale(vec3(10,1,5));
+	floorModelB.setPosition(vec3(0,-1.5,0));
+
+	Model cubeModelB(&cube, &yellow);
+	cubeModelB.setPosition(vec3(2,0,0));
+
+	Portal portalB(3.0f, 3.0f);
+	portalB.setPosition(vec3(-4.49,0,0));
+	portalB.rotateY(90.0f);
+
+	Module moduleB;
+
+	moduleB.addGameObject(&wallFrontB);
+	moduleB.addGameObject(&wallBackB);
+	moduleB.addGameObject(&wallLeftB);
+	moduleB.addGameObject(&wallRightB);
+	moduleB.addGameObject(&floorModelB);
+	//moduleB.addGameObject(&cubeModelB);
+	moduleB.addGameObject(&portalB);
+
+	// Set targets
+	portalA.setTargetPortal(&portalB);
+	portalB.setTargetPortal(&portalA);
+
 	Camera camera;
-	camera.translate(vec3(0, 0, 5));
+	camera.translate(vec3(0, 0, 0));
 	camera.setupProjection(800,600);
 
-	vec4 v(0.5,0.5,-1,1);
+	// Add camera to moduleA
+	moduleA.addGameObject(&camera);
+
+	vec4 v(0.5,0.5,-0.1,1);
 	mat4 proj = glm::perspective(60.0f, 4.0f/3.0f, 0.1f, 100.0f);
-	proj[2][2] = 0.0f;
-	proj[2][3] = 0.0f;
+	proj[2][2] = -1.0f;
+	//proj[2][3] = 0.0f;
 	proj[3][2] = 0.0f;
-	proj[3][3] = 1.0f;
+	//proj[3][3] = 1.0f;
 
 	v = proj * v;
 	v = v / v.w;
@@ -149,14 +194,24 @@ int main()
 			portalA.rotateY(-1.f);
 		if(glfwGetKey('X'))
 			portalA.rotateY(1.f);
-		controlCamera(&camera);
-		camera.setup();
+		handleCamera(&camera);
 
 		//moduleA.draw();
 		if(g_toggle)
-			portal.draw(&camera);
+		{
+			moduleA.removeGameObject(&camera);
+			moduleB.addGameObject(&camera);
+		}
 		else
-			moduleA.draw(&camera);
+		{
+			moduleB.removeGameObject(&camera);
+			moduleA.addGameObject(&camera);
+		}
+		//	portalB.draw(&camera);
+		//else
+		//	moduleA.draw(&camera);
+
+		camera.render();
 		
 		glfwSwapBuffers();
 
@@ -170,15 +225,32 @@ int main()
 	return 0;
 }
 
-void controlCamera(Camera * camera)
+void handleCamera(Camera * camera)
 {
-	vec3 moveVec(glfwGetKey('D')-glfwGetKey('A'),0,glfwGetKey('S')-glfwGetKey('W'));
-	moveVec *= 0.1f;
-	camera->move(moveVec);
+	vec3 oldCameraPos = camera->getPosition();
+
+	vec3 move(glfwGetKey('D')-glfwGetKey('A'),0,glfwGetKey('S')-glfwGetKey('W'));
+	move *= 0.1f;
+	camera->move(move);
+
+	vec3 newCameraPos = camera->getPosition();
 
 	vec2 lookVec(	glfwGetKey(GLFW_KEY_LEFT)-glfwGetKey(GLFW_KEY_RIGHT),
 					glfwGetKey(GLFW_KEY_UP)-glfwGetKey(GLFW_KEY_DOWN));
-	camera->rotateY(lookVec.x);
+	camera->rotateY(lookVec.x * 2.0);
+
+	// Handle portaling :)
+
+	Module * currentModule = camera->getOwnerModule();
+	std::vector<Portal*> portals = currentModule->getPortals();
+
+	for(u32 i=0; i<portals.size(); ++i)
+	{
+		if(intersectionLinePortal(oldCameraPos, newCameraPos, *portals[i]))
+		{
+			camera->setPosition();
+		}
+	}
 }
 
 bool initGL(int width, int height, bool fullscreen)

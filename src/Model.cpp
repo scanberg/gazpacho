@@ -45,7 +45,7 @@ void Model::draw()
 	const Shader * shader = Shader::getBoundShader();
 
 	if(shader)
-		glUniformMatrix4fv(shader->getModelMatrixLocation(), 1, GL_FALSE, glm::value_ptr(m_transform.getPose()));
+		glUniformMatrix4fv(shader->getModelMatrixLocation(), 1, GL_FALSE, glm::value_ptr(m_transform.getModelMatrix()));
 
 	m_mesh->draw();
 }

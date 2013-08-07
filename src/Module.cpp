@@ -46,6 +46,18 @@ void Module::addGameObject(GameObject * object)
 
 void Module::removeGameObject(GameObject * object)
 {
+	if(!object)
+		return;
+
+	if(object->getType() == PORTAL)
+		removePortal((Portal*)object);
+	else
+	{
+		if(object->isStatic())
+			removeStatic(object);
+		else
+			removeDynamic(object);
+	}
 
 }
 
@@ -116,5 +128,32 @@ void Module::drawWithoutPortals(Camera * camera)
 		++it)
 	{
 		(*it)->draw();
+	}
+}
+
+void Module::removeStatic(GameObject * object)
+{
+	for(std::vector<GameObject*>::iterator it = m_staticGameObjects.begin(); it != m_staticGameObjects.end(); ++it)
+	{
+		if(*it == object)
+			m_staticGameObjects.erase(it);
+	}
+}
+
+void Module::removeDynamic(GameObject * object)
+{
+	for(std::list<GameObject*>::iterator it = m_dynamicGameObjects.begin(); it != m_dynamicGameObjects.end(); ++it)
+	{
+		if(*it == object)
+			m_dynamicGameObjects.erase(it);
+	}
+}
+
+void Module::removePortal(Portal * portal)
+{
+	for(std::vector<Portal*>::iterator it = m_portals.begin(); it != m_portals.end(); ++it)
+	{
+		if(*it == portal)
+			m_portals.erase(it);
 	}
 }

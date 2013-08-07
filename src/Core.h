@@ -16,7 +16,7 @@
 #include <glm/gtc/matrix_inverse.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#define EPSILON 1.0e-7
+#define EPSILON 1.0e-6
 #define PI		3.14159265359
 
 typedef signed char		i8;

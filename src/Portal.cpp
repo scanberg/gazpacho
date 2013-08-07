@@ -60,6 +60,11 @@ Portal::~Portal()
 	
 }
 
+bool Portal::isMirror()
+{
+	return m_targetPortal == this;
+}
+
 Portal * Portal::getTargetPortal()
 {
 	return m_targetPortal;
@@ -77,8 +82,9 @@ const vec3 & Portal::getMax()
 
 Plane Portal::getPlane()
 {
-
-	return Plane(vec3(0,0,1),0.0f);
+	Plane p(vec3(0,0,1), 0.0f);
+	p.transform(getPose());
+	return p;
 }
 
 void Portal::setTargetPortal(Portal * portal)
@@ -89,12 +95,12 @@ void Portal::setTargetPortal(Portal * portal)
 void Portal::draw(Camera * cam)
 {
 	const Shader * shader = Shader::getBoundShader();
-	mat4 portalTransform = getPose();
+	//mat4 portalTransform = getPose();
 	int planeLoc = -1;
 
 	if(shader)
 	{
-		glUniformMatrix4fv(shader->getModelMatrixLocation(), 1, GL_FALSE, glm::value_ptr(portalTransform));
+		glUniformMatrix4fv(shader->getModelMatrixLocation(), 1, GL_FALSE, glm::value_ptr(getModelMatrix()));
 		planeLoc = shader->getUniformLocation("clipPlane");
 	}
 
@@ -112,17 +118,17 @@ void Portal::draw(Camera * cam)
 		glEnable(GL_STENCIL_TEST);
 		glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
 		glDepthMask(GL_FALSE);
-		glStencilFunc(GL_NEVER, 1, 0xFF);
-		glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);  // draw 1s on test fail (always)
+		//glStencilFunc(GL_NEVER, 1, 0xFF);
+		glStencilFunc(GL_ALWAYS, 1, 1);
+		glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);  // draw 1s on test fail (always)
 
 		// draw stencil pattern
 		glStencilMask(0xFF);
 		glClear(GL_STENCIL_BUFFER_BIT);  // needs mask=0xFF
 
 		mat4 proj = cam->getProjMatrix();
-		proj[2][2] = 1.0f;
-		//proj[2][3] = 1.0f;
-		proj[3][2] = 1.0f;
+		//proj[2][2] = 0.0f;
+		//proj[3][2] = 0.0f;
 
 		glUniformMatrix4fv(shader->getProjMatrixLocation(), 1, GL_FALSE, glm::value_ptr(proj));
 		Portal::m_quad->draw();
@@ -131,21 +137,39 @@ void Portal::draw(Camera * cam)
 		glDepthMask(GL_TRUE);
 		glStencilMask(0x00);
 		// draw where stencil's value is 0
-		glStencilFunc(GL_EQUAL, 0, 0xFF);
+		//glStencilFunc(GL_EQUAL, 0, 0xFF);
 		/* (nothing to draw) */
+		//Portal::m_quad->draw();
 		// draw only where stencil's value is 1
-		glStencilFunc(GL_EQUAL, 1, 0xFF);
+		glStencilFunc(GL_EQUAL, 1, 1);
+		glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
 
-		mat4 Pa = glm::translate(mat4(),getPosition()) * glm::mat4_cast(getOrientation());
-   		mat4 PbInv = glm::mat4_cast(glm::conjugate(m_targetPortal->getOrientation())) * glm::translate(mat4(),-m_targetPortal->getPosition());
-   		mat4 CInv = glm::mat4_cast(glm::conjugate(cam->getOrientation())) * glm::translate(mat4(),-cam->getPosition());
+		// Clear using a custom quad on screen
+		glDepthFunc(GL_ALWAYS);
 
-		mat4 viewMatrix = CInv * Pa * PbInv;
+		mat4 clearModel = glm::translate(glm::scale(mat4(), vec3(2,2,1)), vec3(0,0,1));
+		mat4 clearView = mat4();
+		mat4 clearProj = mat4();
+
+		glUniformMatrix4fv(shader->getModelMatrixLocation(),1, GL_FALSE, glm::value_ptr(clearModel));
+		glUniformMatrix4fv(shader->getViewMatrixLocation(), 1, GL_FALSE, glm::value_ptr(clearView));
+		glUniformMatrix4fv(shader->getProjMatrixLocation(), 1, GL_FALSE, glm::value_ptr(clearProj));
+
+		i32 colorLoc = shader->getUniformLocation("color");
+		if(colorLoc > -1)
+			glUniform3fv(colorLoc, 1, glm::value_ptr(vec3(0,0,0)));
+
+		Portal::m_quad->draw();
+
+		glDepthFunc(GL_LESS);
+
+   		mat4 P2P = glm::rotate(mat4(1.0f), 180.0f, vec3(0,1,0));
+		mat4 viewMatrix = cam->getInvPose() * getPose() * P2P * m_targetPortal->getInvPose();
 
 		glUniformMatrix4fv(shader->getViewMatrixLocation(), 1, GL_FALSE, glm::value_ptr(viewMatrix));
 		glUniformMatrix4fv(shader->getProjMatrixLocation(), 1, GL_FALSE, glm::value_ptr(cam->getProjMatrix()));
 
-		vec3 normal = glm::mat3_cast((m_targetPortal->getOrientation())) * vec3(0,0,-1);
+		vec3 normal = glm::mat3_cast((m_targetPortal->getOrientation())) * vec3(0,0,1);
 		vec3 point = -m_targetPortal->getPosition();
 
 		Plane clipPlane(normal, point);
@@ -154,10 +178,14 @@ void Portal::draw(Camera * cam)
 		if(planeLoc > -1)
 			glUniform4fv(planeLoc, 1, glm::value_ptr(clipPlane.getVec4()));
 
+		glEnable(GL_CLIP_PLANE0);
+
 		m_targetPortal->getOwnerModule()->drawWithoutPortals(cam);
 
-		if(planeLoc > -1)
-			glUniform4f(planeLoc, 0,0,0,0);
+		//if(planeLoc > -1)
+		//	glUniform4f(planeLoc, 0,0,0,0);
+
+		glDisable(GL_CLIP_PLANE0);
 
 		glDisable(GL_STENCIL_TEST);
 
