@@ -4,6 +4,8 @@
 #include "Core.h"
 #include "GameObject.h"
 
+enum PortalCorner { TOPLEFT, TOPRIGHT, BOTTOMLEFT, BOTTOMRIGHT };
+
 class Portal : public GameObject
 {
 public:
@@ -16,8 +18,9 @@ public:
 	bool 			isMirror();
 
 	Portal * 		getTargetPortal();
-	const vec3 & 	getMin();
-	const vec3 &	getMax();
+
+	vec3			getPortalCorner(PortalCorner corner);
+
 	Plane 			getPlane();
 	
 	void 			setTargetPortal(Portal * portal);

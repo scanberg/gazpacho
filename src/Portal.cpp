@@ -70,14 +70,14 @@ Portal * Portal::getTargetPortal()
 	return m_targetPortal;
 }
 
-const vec3 & Portal::getMin()
+vec3 Portal::getPortalCorner(PortalCorner corner)
 {
-	return m_bounds.getMin();
-}
+	f32 x = (corner % 2) ? m_bounds.getMin().x : m_bounds.getMax().x;
+	f32 y = (corner < 2) ? m_bounds.getMax().y : m_bounds.getMin().y;
 
-const vec3 & Portal::getMax()
-{
-	return m_bounds.getMax();
+	vec4 h = vec4(x, y, 0.0f, 1.0f);
+
+	return vec3(getModelMatrix() * h);
 }
 
 Plane Portal::getPlane()

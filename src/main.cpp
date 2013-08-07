@@ -248,9 +248,14 @@ void handleCamera(Camera * camera)
 	{
 		if(intersectionLinePortal(oldCameraPos, newCameraPos, *portals[i]))
 		{
-			camera->setPosition();
+			//camera->setPosition();
 		}
 	}
+}
+
+bool intersectionLinePortal(vec3 start, vec3 end, const Portal & portal)
+{
+	
 }
 
 bool initGL(int width, int height, bool fullscreen)

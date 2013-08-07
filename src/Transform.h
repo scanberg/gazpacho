@@ -22,6 +22,7 @@ public:
 	void setPosition(const vec3 & position);
 	void setOrientation(const quat & orientation);
 	void setScale(const vec3 & scale);
+	void setTransform(const mat4 & transform);
 	
 private:
 	quat m_orientation;

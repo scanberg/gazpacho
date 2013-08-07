@@ -15,6 +15,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_inverse.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/matrix_access.hpp>
 
 #define EPSILON 1.0e-6
 #define PI		3.14159265359

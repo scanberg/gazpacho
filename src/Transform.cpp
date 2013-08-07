@@ -79,3 +79,9 @@ void Transform::setScale(const vec3 & scale)
 {
 	m_scale = scale;
 }
+
+void Transform::setTransform(const mat4 & transform)
+{
+	m_orientation = glm::quat_cast(transform);
+	m_position = vec3(glm::column(transform, 3));
+}
