@@ -5,11 +5,11 @@
 #include "Mesh.h"
 #include "Model.h"
 #include "Module.h"
+#include "Intersection.h"
 
 bool initGL(int width=800, int height=600, bool fullscreen=false);
 void cleanup();
 void handleCamera(Camera * camera);
-bool intersectionLinePortal(vec3 start, vec3 end, const Portal & portal);
 
 bool g_toggle;
 
@@ -246,16 +246,11 @@ void handleCamera(Camera * camera)
 
 	for(u32 i=0; i<portals.size(); ++i)
 	{
-		if(intersectionLinePortal(oldCameraPos, newCameraPos, *portals[i]))
+		if(intersectLinePortal(oldCameraPos, newCameraPos, *portals[i]))
 		{
-			//camera->setPosition();
+			printf("HIT! \n");
 		}
 	}
-}
-
-bool intersectionLinePortal(vec3 start, vec3 end, const Portal & portal)
-{
-	
 }
 
 bool initGL(int width, int height, bool fullscreen)

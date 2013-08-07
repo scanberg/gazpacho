@@ -4,6 +4,7 @@
 #include "Transform.h"
 #include "Bounds.h"
 #include "Frustum.h"
+#include "Portal.h"
 
 bool intersectBoxBox(	Transform * tboxA,
 						Bounds * boxA,
@@ -37,5 +38,9 @@ bool intersectFrustumSphere(Transform * tfrustum,
 bool intersectLineTriangle(	const vec3 & start,
 							const vec3 & end,
 							const vec3 * triangle);
+
+bool intersectionLinePortal(const vec3 & start,
+							const vec3 & end,
+							const Portal * portal);
 
 #endif
