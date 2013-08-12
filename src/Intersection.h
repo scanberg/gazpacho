@@ -6,6 +6,10 @@
 #include "Frustum.h"
 #include "Portal.h"
 
+bool intersectBoxPoint( const Transform * tbox,
+						const Bounds * box,
+						const vec3 & point);
+
 bool intersectBoxBox(	Transform * tboxA,
 						Bounds * boxA,
 						Transform * tboxB,
@@ -39,8 +43,8 @@ bool intersectLineTriangle(	const vec3 & start,
 							const vec3 & end,
 							const vec3 * triangle);
 
-bool intersectionLinePortal(const vec3 & start,
+bool intersectLinePortal(	const vec3 & start,
 							const vec3 & end,
-							const Portal * portal);
+							const Portal & portal);
 
 #endif

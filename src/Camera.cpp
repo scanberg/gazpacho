@@ -14,6 +14,31 @@ Camera::~Camera()
 
 }
 
+f32 Camera::getFov() const
+{
+	return m_fov;
+}
+
+f32 Camera::getNearClip() const
+{
+	return m_near;
+}
+
+f32 Camera::getFarClip() const
+{
+	return m_far;
+}
+
+f32 Camera::getFocalDistance() const
+{
+	return m_focalDistance;
+}
+
+f32 Camera::getFocalRange() const
+{
+	return m_focalRange;
+}
+
 const mat4 & Camera::getViewMatrix()
 {
     m_viewMatrix = glm::mat4_cast(glm::conjugate(getOrientation()));

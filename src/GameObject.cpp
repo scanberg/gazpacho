@@ -14,72 +14,72 @@ GameObject::~GameObject()
 
 }
 
-bool GameObject::isStatic()
+bool GameObject::isStatic() const
 {
 	return m_flags & GAMEOBJECT_STATIC_BIT;
 }
 
-bool GameObject::isDrawable()
+bool GameObject::isDrawable() const
 {
 	return m_flags & GAMEOBJECT_DRAWABLE_BIT;
 }
 
-const Transform & GameObject::getTransform()
+const Transform & GameObject::getTransform() const
 {
 	return m_transform;
 }
 
-const Bounds & GameObject::getBounds()
+const Bounds & GameObject::getBounds() const
 {
 	return m_bounds;
 }
 
-Module * GameObject::getOwnerModule()
+Module * GameObject::getOwnerModule() const
 {
 	return m_ownerModule;
 }
 
-GameObjectType GameObject::getType()
+GameObjectType GameObject::getType() const
 {
 	return m_type;
 }
 
-const vec3 & GameObject::getPosition()
+const vec3 & GameObject::getPosition() const
 {
 	return m_transform.getPosition();
 }
 
-const quat & GameObject::getOrientation()
+const quat & GameObject::getOrientation() const
 {
 	return m_transform.getOrientation();
 }
 
-const vec3 & GameObject::getScale()
+const vec3 & GameObject::getScale() const
 {
 	return m_transform.getScale();
 }
 
-mat4 GameObject::getPose()
+mat4 GameObject::getPose() const
 {
 	return m_transform.getPose();
 }
 
-mat4 GameObject::getInvPose()
+mat4 GameObject::getInvPose() const
 {
 	return m_transform.getInvPose();
 }
 
-mat4 GameObject::getModelMatrix()
+mat4 GameObject::getModelMatrix() const
 {
 	return m_transform.getModelMatrix();
 }
 
-mat4 GameObject::getInvModelMatrix()
+mat4 GameObject::getInvModelMatrix() const
 {
 	return m_transform.getInvModelMatrix();
 }
 
-vec3 GameObject::getEulerAngles()
+vec3 GameObject::getEulerAngles() const
 {
 	return glm::eulerAngles(getOrientation());
 }
@@ -97,6 +97,11 @@ void GameObject::setOrientation(const quat & orientation)
 void GameObject::setScale(const vec3 & scale)
 {
 	m_transform.setScale(scale);
+}
+
+void GameObject::setTransform(const mat4 & transform)
+{
+	m_transform.setTransform(transform);
 }
 
 void GameObject::translate(const vec3 &translation)

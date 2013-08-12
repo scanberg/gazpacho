@@ -23,6 +23,7 @@ public:
 	void drawWithoutPortals(Camera * camera = NULL);
 
 private:
+	static std::vector<Module*> s_modules;
 
 	void removeStatic(GameObject * object);
 	void removeDynamic(GameObject * object);

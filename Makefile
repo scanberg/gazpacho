@@ -1,4 +1,4 @@
-Sources		= main.cpp Camera.cpp Frustum.cpp GameObject.cpp GL.cpp Material.cpp Mesh.cpp Model.cpp Module.cpp Plane.cpp Portal.cpp Shader.cpp Transform.cpp
+Sources		= main.cpp Camera.cpp Frustum.cpp GameObject.cpp GL.cpp Intersection.cpp Material.cpp Mesh.cpp Model.cpp Module.cpp Plane.cpp Portal.cpp Shader.cpp Transform.cpp
 
 CFlags 		= -c -Wall -g -O3
 LDFlags 	= 

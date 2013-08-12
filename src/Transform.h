@@ -9,15 +9,15 @@ public:
 	Transform();
 	~Transform();
 
-	const quat & getOrientation();
-	const vec3 & getPosition();
-	const vec3 & getScale();
+	const quat & getOrientation() const;
+	const vec3 & getPosition() const;
+	const vec3 & getScale() const;
 
-	mat4 getModelMatrix();
-	mat4 getInvModelMatrix();
+	mat4 getModelMatrix() const;
+	mat4 getInvModelMatrix() const;
 
-	mat4 getPose();
-	mat4 getInvPose();
+	mat4 getPose() const;
+	mat4 getInvPose() const;
 
 	void setPosition(const vec3 & position);
 	void setOrientation(const quat & orientation);

@@ -15,9 +15,9 @@ public:
 	m_radius(radius)
 	{}
 
-	const vec3 & getMin() { return m_min; }
-	const vec3 & getMax() { return m_max; }
-	const f32 & getRadius() { return m_radius;}
+	const vec3 & getMin() const { return m_min; }
+	const vec3 & getMax() const { return m_max; }
+	const f32 & getRadius() const { return m_radius;}
 
 	void drawBB()
 	{

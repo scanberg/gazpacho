@@ -97,6 +97,8 @@ void Module::draw(Camera * camera)
 		m_portals[i]->draw(camera);
 	}
 
+	//printf("portals: %i \n", m_portals.size());
+
 }
 
 void Module::drawWithoutPortals(Camera * camera)
@@ -136,7 +138,10 @@ void Module::removeStatic(GameObject * object)
 	for(std::vector<GameObject*>::iterator it = m_staticGameObjects.begin(); it != m_staticGameObjects.end(); ++it)
 	{
 		if(*it == object)
+		{
 			m_staticGameObjects.erase(it);
+			object->m_ownerModule = NULL;
+		}
 	}
 }
 
@@ -145,7 +150,10 @@ void Module::removeDynamic(GameObject * object)
 	for(std::list<GameObject*>::iterator it = m_dynamicGameObjects.begin(); it != m_dynamicGameObjects.end(); ++it)
 	{
 		if(*it == object)
+		{
 			m_dynamicGameObjects.erase(it);
+			object->m_ownerModule = NULL;
+		}
 	}
 }
 
@@ -154,6 +162,9 @@ void Module::removePortal(Portal * portal)
 	for(std::vector<Portal*>::iterator it = m_portals.begin(); it != m_portals.end(); ++it)
 	{
 		if(*it == portal)
+		{
 			m_portals.erase(it);
+			portal->m_ownerModule = NULL;
+		}
 	}
 }

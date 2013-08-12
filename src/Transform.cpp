@@ -13,22 +13,22 @@ Transform::~Transform()
 
 }
 
-const quat & Transform::getOrientation()
+const quat & Transform::getOrientation() const
 {
 	return m_orientation;
 }
 
-const vec3 & Transform::getPosition()
+const vec3 & Transform::getPosition() const
 {
 	return m_position;
 }
 
-const vec3 & Transform::getScale()
+const vec3 & Transform::getScale() const
 {
 	return m_scale;
 }
 
-mat4 Transform::getModelMatrix()
+mat4 Transform::getModelMatrix() const
 {
 	// REMOVE WHEN A GLOBAL UPDATE IS IN PLACE, OR?
 	mat4 pose;
@@ -38,8 +38,7 @@ mat4 Transform::getModelMatrix()
 	return pose;
 }
 
-
-mat4 Transform::getInvModelMatrix()
+mat4 Transform::getInvModelMatrix() const
 {
 	mat4 pose;
 	pose = 	glm::scale(mat4(), 1.0f/m_scale) *
@@ -48,7 +47,7 @@ mat4 Transform::getInvModelMatrix()
 	return pose;
 }
 
-mat4 Transform::getPose()
+mat4 Transform::getPose() const
 {
 	// REMOVE WHEN A GLOBAL UPDATE IS IN PLACE, OR?
 	mat4 pose;
@@ -57,7 +56,7 @@ mat4 Transform::getPose()
 	return pose;
 }
 
-mat4 Transform::getInvPose()
+mat4 Transform::getInvPose() const
 {
 	mat4 pose;
 	pose = 	glm::mat4_cast(glm::conjugate(m_orientation)) *
