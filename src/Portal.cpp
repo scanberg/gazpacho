@@ -45,8 +45,8 @@ m_targetPortal(targetPortal)
 	f32 half_width = width * 0.5f;
 	f32 half_height = height * 0.5f;
 
-	vec3 min = vec3(-half_width, -half_height, -0.1f);
-	vec3 max = vec3(half_width, half_height, 0.1f);
+	vec3 min = vec3(-half_width, -half_height, -0.2f);
+	vec3 max = vec3(half_width, half_height, 0.2f);
 	f32 radius = length(max);
 
 	m_bounds = Bounds(min, max, radius);
@@ -161,6 +161,7 @@ void Portal::draw(Camera * cam)
 			proj[3][2] = 0.0f;
 		}
 
+		glUniformMatrix4fv(shader->getViewMatrixLocation(), 1, GL_FALSE, glm::value_ptr(cam->getViewMatrix()));
 		glUniformMatrix4fv(shader->getProjMatrixLocation(), 1, GL_FALSE, glm::value_ptr(proj));
 		Portal::m_quad->draw();
 
@@ -211,7 +212,6 @@ void Portal::draw(Camera * cam)
 
 		glDisable(GL_CLIP_PLANE0);
 		glDisable(GL_STENCIL_TEST);
-
 	}
 	else
 	{

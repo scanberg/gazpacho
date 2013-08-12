@@ -97,7 +97,7 @@ int main()
 	cubeModelA.setPosition(vec3(2,0,0));
 
 	Portal portalA(1.5f, 2.0f);
-	portalA.setPosition(vec3(-4.49,0,-1.0));
+	portalA.setPosition(vec3(-4.49,0,0.0));
 	portalA.rotateY(90.0f);
 
 	Portal portalA2(1.5f, 2.0f);
@@ -113,7 +113,7 @@ int main()
 	moduleA.addGameObject(&floorModelA);
 	moduleA.addGameObject(&cubeModelA);
 	moduleA.addGameObject(&portalA);
-	moduleA.addGameObject(&portalA2);
+	//moduleA.addGameObject(&portalA2);
 
 	// MODULE B
 
@@ -163,8 +163,8 @@ int main()
 	// Set targets
 	portalA.setTargetPortal(&portalB);
 	portalB.setTargetPortal(&portalA);
-	portalB2.setTargetPortal(&portalA2);
-	portalA2.setTargetPortal(&portalB2);
+	portalB2.setTargetPortal(&portalA);
+	//portalA2.setTargetPortal(&portalB2);
 
 	Camera camera;
 	camera.translate(vec3(0, 0, 0));
